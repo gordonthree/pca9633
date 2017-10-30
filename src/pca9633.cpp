@@ -76,17 +76,17 @@ void PCA9633::begin(uint8_t addr) { // lets get started
 	chipinit(); // setup chip
 }
 
-void PCA9633::rgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {
+void PCA9633::setrgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {
   i2c_write(_pcaAddr, PWM0, p0);
   i2c_write(_pcaAddr, PWM1, p1);
   i2c_write(_pcaAddr, PWM2, p2);
   i2c_write(_pcaAddr, PWM3, p3);
 }
 
-void PCA9633::pwm(uint8_t pwmaddr, uint8_t pwmval) {
+void PCA9633::setpwm(uint8_t pwmaddr, uint8_t pwmval) {
   i2c_write(_pcaAddr, (pwmaddr + 2), pwmval);
 }
 
-void PCA9633::grouppwm(uint8_t pwm) {
+void PCA9633::setgrouppwm(uint8_t pwm) {
   i2c_write(_pcaAddr, GRPPWM, pwm);
 }

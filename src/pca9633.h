@@ -58,9 +58,9 @@ class PCA9633 {
  public:
  	PCA9633();
  	void begin(uint8_t addr); // set i2c address, initialize chip
- 	void rgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3); // set all four pwm reg at once
- 	void pwm(uint8_t pwmaddr, uint8_t pwmval); // set a single PWM register
- 	void grouppwm(uint8_t pwm); // group dimming
+ 	void setrgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3); // set all four pwm reg at once
+ 	void setpwm(uint8_t pwmaddr, uint8_t pwmval); // set a single PWM register
+ 	void setgrouppwm(uint8_t pwm); // group dimming
  	void chipinit(); // reset chip to desired startup state
 
  private:
