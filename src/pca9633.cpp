@@ -60,7 +60,7 @@ static uint8_t i2c_read(uint8_t address, uint8_t cmd) {
   return result;
 }
 
-PCA9633::chipinit() { // setup chip with desired operating parameters
+void PCA9633::chipinit(void) { // setup chip with desired operating parameters
   uint8_t m1 = 0x00; // set sleep = 0, turn on oscillator, disable allcall and subaddrs
   uint8_t m2 = ((INVRT) | (OUTDRV)); // output inverted, totem pole drivers enabled
   uint8_t ldout = 0xFF; // all outputs under individual and group control
@@ -70,23 +70,23 @@ PCA9633::chipinit() { // setup chip with desired operating parameters
   i2c_write(_pcaAddr, LEDOUT, ldout);
 }
 
-PCA9633::begin(uint8_t addr) { // lets get started
+void PCA9633::begin(uint8_t addr) { // lets get started
 	_pcaAddr = addr;
 	Wire.begin();
 	chipinit(); // setup chip
 }
 
-PCA9633::rgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {
+void PCA9633::rgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {
   i2c_write(_pcaAddr, PWM0, p0);
   i2c_write(_pcaAddr, PWM1, p1);
   i2c_write(_pcaAddr, PWM2, p2);
   i2c_write(_pcaAddr, PWM3, p3);
 }
 
-PCA9633::pwm(uint8_t pwmaddr, uint8_t pwmval) {
+void PCA9633::pwm(uint8_t pwmaddr, uint8_t pwmval) {
   i2c_write(_pcaAddr, (pwmaddr + 2), pwmval);
 }
 
-PCA9633::grouppwm(uint8_t pwm) {
+void PCA9633::grouppwm(uint8_t pwm) {
   i2c_write(_pcaAddr, GRPPWM, pwm);
 }
