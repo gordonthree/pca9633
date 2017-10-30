@@ -82,3 +82,11 @@ PCA9633::rgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {
   i2c_write(_pcaAddr, PWM2, p2);
   i2c_write(_pcaAddr, PWM3, p3);
 }
+
+PCA9633::pwm(uint8_t pwmaddr, uint8_t pwmval) {
+  i2c_write(_pcaAddr, (pwmaddr + 2), pwmval);
+}
+
+PCA9633::grouppwm(uint8_t pwm) {
+  i2c_write(_pcaAddr, GRPPWM, pwm);
+}
