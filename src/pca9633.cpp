@@ -53,14 +53,14 @@ static uint8_t i2c_read(uint8_t address, uint8_t cmd) {
   Wire.write(cmd); // control register
   Wire.endTransmission();
 
-  uint8_t readbytes = Wire.requestFrom(devaddr, (size_t)1, (bool)true); // request cnt bytes
+  uint8_t readbytes = Wire.requestFrom(address, (size_t)1, (bool)true); // request cnt bytes
 
   result  = Wire.read();
 
   return result;
 }
 
-PCA9633::reset() { // setup chip with desired operating parameters
+PCA9633::chipinit() { // setup chip with desired operating parameters
   uint8_t m1 = 0x00; // set sleep = 0, turn on oscillator, disable allcall and subaddrs
   uint8_t m2 = ((INVRT) | (OUTDRV)); // output inverted, totem pole drivers enabled
   uint8_t ldout = 0xFF; // all outputs under individual and group control
@@ -73,7 +73,7 @@ PCA9633::reset() { // setup chip with desired operating parameters
 PCA9633::begin(uint8_t addr) { // lets get started
 	_pcaAddr = addr;
 	Wire.begin();
-	reset(); // setup chip
+	chipinit(); // setup chip
 }
 
 PCA9633::rgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {

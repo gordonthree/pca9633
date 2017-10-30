@@ -61,7 +61,7 @@ class PCA9633 {
  	void rgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3); // set all four pwm reg at once
  	void pwm(uint8_t pwmaddr, uint8_t pwmval); // set a single PWM register
  	void grouppwm(uint8_t pwm); // group dimming
- 	void reset(); // reset chip to desired startup state
+ 	void chipinit(); // reset chip to desired startup state
 
  private:
  	uint8_t _pcaAddr;
