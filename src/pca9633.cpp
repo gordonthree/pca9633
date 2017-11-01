@@ -2,16 +2,16 @@
  #include "Arduino.h"
 #else
  #include "WProgram.h"
- #include "pins_arduino.h"
- #include "WConstants.h"
+ // #include "pins_arduino.h"
+ // #include "WConstants.h"
 #endif
 
-#include <Wire.h>
+#include <OneWire.h>
 #include "PCA9633.h"
 
 PCA9633::PCA9633() {}
 
-static void i2c_wordwrite(uint8_t address, uint8_t cmd, uint16_t theWord) {
+static void _i2c_wordwrite(uint8_t address, uint8_t cmd, uint16_t theWord) {
   //  Send output register address
   Wire.beginTransmission(address);
   Wire.write(cmd); // control register
@@ -20,7 +20,7 @@ static void i2c_wordwrite(uint8_t address, uint8_t cmd, uint16_t theWord) {
   Wire.endTransmission();
 }
 
-static void i2c_write(uint8_t address, uint8_t cmd, uint8_t data) {
+static void _i2c_write(uint8_t address, uint8_t cmd, uint8_t data) {
   //  Send output register address
   Wire.beginTransmission(address);
   Wire.write(cmd); // control register
@@ -28,7 +28,7 @@ static void i2c_write(uint8_t address, uint8_t cmd, uint8_t data) {
   Wire.endTransmission();
 }
 
-static uint16_t i2c_wordread(uint8_t address, uint8_t cmd) {
+static uint16_t _i2c_wordread(uint8_t address, uint8_t cmd) {
   uint16_t result;
   uint8_t xlo, xhi;
 
@@ -46,7 +46,7 @@ static uint16_t i2c_wordread(uint8_t address, uint8_t cmd) {
   return result;
 }
 
-static uint8_t i2c_read(uint8_t address, uint8_t cmd) {
+static uint8_t _i2c_read(uint8_t address, uint8_t cmd) {
   uint8_t result = 0;
 
   Wire.beginTransmission(address);
@@ -65,28 +65,28 @@ void PCA9633::chipinit(void) { // setup chip with desired operating parameters
   uint8_t m2 = ((INVRT) | (OUTDRV)); // output inverted, totem pole drivers enabled
   uint8_t ldout = 0xFF; // all outputs under individual and group control
 
-  i2c_write(_pcaAddr, MODE1, m1);
-  i2c_write(_pcaAddr, MODE2, m2);
-  i2c_write(_pcaAddr, LEDOUT, ldout);
+  _i2c_write(_pcaAddr, MODE1, m1);
+  _i2c_write(_pcaAddr, MODE2, m2);
+  _i2c_write(_pcaAddr, LEDOUT, ldout);
 }
 
 void PCA9633::begin(uint8_t addr) { // lets get started
 	_pcaAddr = addr;
-	Wire.begin();
+	// Wire.begin(); // don't need this maybe?
 	chipinit(); // setup chip
 }
 
 void PCA9633::setrgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {
-  i2c_write(_pcaAddr, PWM0, p0);
-  i2c_write(_pcaAddr, PWM1, p1);
-  i2c_write(_pcaAddr, PWM2, p2);
-  i2c_write(_pcaAddr, PWM3, p3);
+  _i2c_write(_pcaAddr, PWM0, p0);
+  _i2c_write(_pcaAddr, PWM1, p1);
+  _i2c_write(_pcaAddr, PWM2, p2);
+  _i2c_write(_pcaAddr, PWM3, p3);
 }
 
 void PCA9633::setpwm(uint8_t pwmaddr, uint8_t pwmval) {
-  i2c_write(_pcaAddr, (pwmaddr + 2), pwmval);
+  _i2c_write(_pcaAddr, (pwmaddr + 2), pwmval);
 }
 
 void PCA9633::setgrouppwm(uint8_t pwm) {
-  i2c_write(_pcaAddr, GRPPWM, pwm);
+  _i2c_write(_pcaAddr, GRPPWM, pwm);
 }
