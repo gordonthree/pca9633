@@ -36,7 +36,7 @@ static uint16_t _i2c_wordread(uint8_t address, uint8_t cmd) {
   Wire.write(cmd); // control register
   Wire.endTransmission();
 
-  uint8_t readbytes = Wire.requestFrom(address, 2); // request two bytes
+  uint8_t readbytes = Wire.requestFrom(address, (uint8_t) 2); // request two bytes
   xhi = Wire.read();
   xlo = Wire.read();
 
