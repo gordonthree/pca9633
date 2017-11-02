@@ -6,8 +6,8 @@
  // #include "WConstants.h"
 #endif
 
-#include <OneWire.h>
-#include "PCA9633.h"
+#include <Wire.h>
+#include "pca9633.h"
 
 PCA9633::PCA9633() {}
 
