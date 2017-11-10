@@ -60,7 +60,7 @@ static uint8_t _i2c_read(uint8_t address, uint8_t cmd) {
   return result;
 }
 
-statuc uint8_t linearize(uint8_t pwm) {
+uint8_t linearize(uint8_t pwm) {
   uint8_t result = pgm_read_byte(ledLinear + pwm);
   return result;
 }
