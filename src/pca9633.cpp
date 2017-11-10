@@ -60,6 +60,12 @@ static uint8_t _i2c_read(uint8_t address, uint8_t cmd) {
   return result;
 }
 
+statuc uint8_t linearize(uint8_t pwm) {
+  uint8_t result = pgm_read_byte(ledLinear + pwm);
+  return result;
+}
+
+
 void PCA9633::chipinit(void) { // setup chip with desired operating parameters
   uint8_t m1 = 0x00; // set sleep = 0, turn on oscillator, disable allcall and subaddrs
   uint8_t m2 = ((INVRT) | (OUTDRV)); // output inverted, totem pole drivers enabled
@@ -77,14 +83,14 @@ void PCA9633::begin(uint8_t addr) { // lets get started
 }
 
 void PCA9633::setrgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {
-  _i2c_write(_pcaAddr, PWM0, p0);
-  _i2c_write(_pcaAddr, PWM1, p1);
-  _i2c_write(_pcaAddr, PWM2, p2);
-  _i2c_write(_pcaAddr, PWM3, p3);
+  _i2c_write(_pcaAddr, PWM0, linearize(p0));
+  _i2c_write(_pcaAddr, PWM1, linearize(p1));
+  _i2c_write(_pcaAddr, PWM2, linearize(p2));
+  _i2c_write(_pcaAddr, PWM3, linearize(p3));
 }
 
 void PCA9633::setpwm(uint8_t pwmaddr, uint8_t pwmval) {
-  _i2c_write(_pcaAddr, (pwmaddr + 2), pwmval);
+  _i2c_write(_pcaAddr, (pwmaddr + 2), linearize(pwmval));
 }
 
 void PCA9633::setgrouppwm(uint8_t pwm) {
