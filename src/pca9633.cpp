@@ -100,10 +100,10 @@ void PCA9633::setpwm(uint8_t pwmaddr, uint8_t pwmval) {
     for (uint8_t newval=oldval; newval==pwmval; newval--) {
       _i2c_write(_pcaAddr, (pwmaddr + 2), linearize(newval));
       delay(_fadeDelay);
-    } else {
-      _i2c_write(_pcaAddr, (pwmaddr + 2), linearize(pwmval));
     }
-   }
+  } else {
+      _i2c_write(_pcaAddr, (pwmaddr + 2), linearize(pwmval));
+  }
   
 }
 
