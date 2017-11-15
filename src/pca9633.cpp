@@ -90,7 +90,21 @@ void PCA9633::setrgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {
 }
 
 void PCA9633::setpwm(uint8_t pwmaddr, uint8_t pwmval) {
-  _i2c_write(_pcaAddr, (pwmaddr + 2), linearize(pwmval));
+  uint8_t oldval = _i2c_read(_pcaAddr, pwmaddr);
+  if (oldval<pwmval) {
+    for (uint8_t newval=oldval; newval==pwmval; newval++) {
+      _i2c_write(_pcaAddr, (pwmaddr + 2), linearize(newval));
+      delay(_fadeDelay);
+    }
+   } else if (oldval>pwmval) {
+    for (uint8_t newval=oldval; newval==pwmval; newval--) {
+      _i2c_write(_pcaAddr, (pwmaddr + 2), linearize(newval));
+      delay(_fadeDelay);
+    } else {
+      _i2c_write(_pcaAddr, (pwmaddr + 2), linearize(pwmval));
+    }
+   }
+  
 }
 
 void PCA9633::setgrouppwm(uint8_t pwm) {

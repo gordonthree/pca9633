@@ -87,6 +87,7 @@ class PCA9633 {
 
  private:
  	uint8_t _pcaAddr;
+	uint8_t _oldred, _oldgreen, _oldblue, _oldwhite, _fadeDelay;
 };
 
 
