@@ -109,13 +109,15 @@ void PCA9633::setpwm(uint8_t pwmaddr, uint8_t pwmval) {
   if (curval==pwmval) {
     // do nothing
   } else if (curval<pwmval) { // current value less than requested value
-    for (uint8_t newval=curval+1; newval<=pwmval; newval++) { // add until equal
-      _i2c_write(_pcaAddr, (pwmaddr + 2), linearize(newval));
+    for (int newval=curval+1; newval<=pwmval; newval++) { // add until equal
+      if (newval>255) newval=255;
+      _i2c_write(_pcaAddr, (pwmaddr + 2), newval);
       delay(_fadeDelay);
     }
    } else if (curval>pwmval) { // current value greater than requested value
-    for (uint8_t newval=curval-1; newval>=pwmval; newval--) {
-      _i2c_write(_pcaAddr, (pwmaddr + 2), linearize(newval));
+    for (int newval=curval-1; newval>=pwmval; newval--) {
+      if (newval<0) newval=0;
+      _i2c_write(_pcaAddr, (pwmaddr + 2), newval);
       delay(_fadeDelay);
     }
   } 
