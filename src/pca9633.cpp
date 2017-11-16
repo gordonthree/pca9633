@@ -96,12 +96,12 @@ void PCA9633::setrgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {
 }
 
 void PCA9633::setFade(uint8_t dly) {
- fadeDelay = dly;
- if (dly=0 || dly>100) fadeDelay=10;
+ _fadeDelay = dly;
+ if (dly=0 || dly>100) _fadeDelay=10;
 }
 
-uint8_t PCA9633:getFade() {
-  return fadeDelay;
+uint8_t PCA9633::getFade() {
+  return _fadeDelay;
 }
 
 void PCA9633::setpwm(uint8_t pwmaddr, uint8_t pwmval) {
