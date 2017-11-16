@@ -95,7 +95,7 @@ void PCA9633::setrgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {
   _i2c_write(_pcaAddr, PWM3, linearize(p3));
 }
 
-void PCA9633::setFade(uint8_t dly);
+void PCA9633::setFade(uint8_t dly) {
  fadeDelay = dly;
  if (dly=0 || dly>100) fadeDelay=10;
 }
