@@ -78,16 +78,19 @@ const uint8_t ledLinear[] PROGMEM = {
 class PCA9633 {
  public:
  	PCA9633();
- 	void begin(uint8_t addr); // set i2c address, initialize chip
+ 	void begin(uint8_t devAddr); // set i2c address, initialize chip
+ 	void begin(uint8_t devAddr, uint8_t fade_delay); // set i2c address, initialize chip
  	void setrgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3); // set all four pwm reg at once
  	void setpwm(uint8_t pwmaddr, uint8_t pwmval); // set a single PWM register
  	void setgrouppwm(uint8_t pwm); // group dimming
  	void chipinit(); // reset chip to desired startup state
 	uint8_t linearize(uint8_t pwm); // read from linearize lookup table and return value
+	uint8_t getFade();
+	void setFade(uint8_t fade_delay);
 
  private:
  	uint8_t _pcaAddr;
-	uint8_t _oldred, _oldgreen, _oldblue, _oldwhite;
+	uint8_t _oldred, _oldgreen, _oldblue, _oldwhite, fadeDelay;
 };
 
 

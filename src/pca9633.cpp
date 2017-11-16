@@ -76,10 +76,16 @@ void PCA9633::chipinit(void) { // setup chip with desired operating parameters
   _i2c_write(_pcaAddr, LEDOUT, ldout);
 }
 
-void PCA9633::begin(uint8_t addr) { // lets get started
-	_pcaAddr = addr;
-	// Wire.begin(); // don't need this maybe?
+void PCA9633::begin(uint8_t devAddr) { // lets get started
+	_pcaAddr = devAddr;
 	chipinit(); // setup chip
+  setFade(10);
+}
+
+void PCA9633::begin(uint8_t devAddr, uint8_t fade_delay) { // lets get started
+	_pcaAddr = devAddr;
+	chipinit(); // setup chip
+  setFade(fade_delay);
 }
 
 void PCA9633::setrgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {
@@ -89,8 +95,16 @@ void PCA9633::setrgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {
   _i2c_write(_pcaAddr, PWM3, linearize(p3));
 }
 
+void PCA9633::setFade(uint8_t dly);
+ fadeDelay = dly;
+ if (dly=0 || dly>100) fadeDelay=10;
+}
+
+uint8_t PCA9633:getFade() {
+  return fadeDelay;
+}
+
 void PCA9633::setpwm(uint8_t pwmaddr, uint8_t pwmval) {
-  uint8_t _fadeDelay = 50; // ms per step
   uint8_t curval = _i2c_read(_pcaAddr, (pwmaddr + 2)); // read current value
   if (curval==pwmval) {
     // do nothing
