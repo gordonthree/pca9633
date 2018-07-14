@@ -53,7 +53,12 @@ static uint8_t _i2c_read(uint8_t address, uint8_t cmd) {
   Wire.write(cmd); // control register
   Wire.endTransmission();
 
+  // uglyness as a temporary fix for esp32 wire library which is different than esp8266 version
+  #ifdef _ESP32
+  uint8_t readbytes = Wire.requestFrom(address, 1, (bool)true); // request cnt bytes
+  #else
   uint8_t readbytes = Wire.requestFrom(address, (size_t)1, (bool)true); // request cnt bytes
+  #endif
 
   result  = Wire.read();
 
