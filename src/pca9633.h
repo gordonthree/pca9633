@@ -86,7 +86,7 @@ class PCA9633 {
  	void setpwm(uint8_t pwmaddr, uint8_t pwmval); // set a single PWM register
  	void setgrouppwm(uint8_t pwm); // group dimming
  	void chipinit(); // reset chip to desired startup state
-	uint8_t linearize(uint8_t pwm); // read from linearize lookup table and return value
+//	uint8_t linearize(uint8_t pwm); // read from linearize lookup table and return value
 	uint8_t getFade();
 	void setFade(uint8_t fade_delay);
 
