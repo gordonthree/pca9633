@@ -62,7 +62,7 @@ rgbw.begin(uint8_t devAddr, uint8_t fade_delay);
 
 ```
 
-### My prototype board
+### My prototype board:
 ESP8266 based 4-channel dimmer for large LED strips. Beefy mosfets on each channel with proper 12v drivers.
 
 ![Image of PCA9633 prototype board](https://github.com/gordonthree/pca9633/blob/master/pca9633-proto.png?raw=true)
