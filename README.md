@@ -65,6 +65,9 @@ rgbw.begin(uint8_t devAddr);
 // init library with slave device and fade delay
 rgbw.begin(uint8_t devAddr, uint8_t fade_delay);
 
+// init library with slave device, fade delay and also call Wire.begin() internally, only set 3rd argument to true
+rgbw.begin(uint8_t devAddr, uint8_t fade_delay, uint8_t i2c_init);
+
 ```
 
 ### My prototype board:
