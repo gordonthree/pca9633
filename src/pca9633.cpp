@@ -1,9 +1,7 @@
 #if ARDUINO >= 100
- #include "Arduino.h"
+#include "Arduino.h"
 #else
- #include "WProgram.h"
- // #include "pins_arduino.h"
- // #include "WConstants.h"
+#include "WProgram.h"
 #endif
 
 #include <Wire.h>
@@ -67,12 +65,10 @@ static uint8_t _i2c_read(uint8_t address, uint8_t cmd) {
   return result;
 }
 
-/* temporarily remove linearize function
 uint8_t PCA9633::linearize(uint8_t pwm) {
   uint8_t result = pgm_read_byte(ledLinear + pwm);
   return result;
 }
-*/
 
 void PCA9633::chipinit(void) { // setup chip with desired operating parameters
   uint8_t m1 = 0x00; // set sleep = 0, turn on oscillator, disable allcall and subaddrs
@@ -84,29 +80,32 @@ void PCA9633::chipinit(void) { // setup chip with desired operating parameters
   _i2c_write(_pcaAddr, LEDOUT, ldout);
 }
 
-void PCA9633::begin(uint8_t devAddr) { // lets get started
-	_pcaAddr = devAddr;
-	chipinit(); // setup chip
+void PCA9633::begin(uint8_t devAddr) { // just set device address
+  _pcaAddr = devAddr;
+  chipinit(); // setup chip
   setFade(10);
 }
 
-void PCA9633::begin(uint8_t devAddr, uint8_t fade_delay) { // lets get started
-	_pcaAddr = devAddr;
-	chipinit(); // setup chip
+void PCA9633::begin(uint8_t devAddr, uint8_t fade_delay) { // set device address and fade delay
+  _pcaAddr = devAddr;
+  chipinit(); // setup chip
   setFade(fade_delay);
 }
 
+void PCA9633::begin(uint8_t devAddr, uint8_t fade_delay, uint8_t i2c_init) { // set device address, fade delay and init i2c using defaults
+  pcaAddr = devAddr;
+  chipinit(); // setup chip
+  setFade(fade_delay);
+  if (i2c_init) { // start i2c bus
+    Wire.begin();
+  }
+}
+
 void PCA9633::setrgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3) {
-  /* temporarily remove linearize function
   _i2c_write(_pcaAddr, PWM0, linearize(p0));
   _i2c_write(_pcaAddr, PWM1, linearize(p1));
   _i2c_write(_pcaAddr, PWM2, linearize(p2));
   _i2c_write(_pcaAddr, PWM3, linearize(p3));
-  */
-  _i2c_write(_pcaAddr, PWM0, p0);
-  _i2c_write(_pcaAddr, PWM1, p1);
-  _i2c_write(_pcaAddr, PWM2, p2);
-  _i2c_write(_pcaAddr, PWM3, p3);
 
 }
 
@@ -135,7 +134,7 @@ void PCA9633::setpwm(uint8_t pwmaddr, uint8_t pwmval) {
       _i2c_write(_pcaAddr, (pwmaddr + 2), newval);
       delay(_fadeDelay);
     }
-  } 
+  }
 }
 
 void PCA9633::setgrouppwm(uint8_t pwm) {
