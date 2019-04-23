@@ -8,16 +8,21 @@ Library to control the NXP / Philips / Texas Instruments PCA9633 four channel 8 
 ```c
 // include library
 #include <pca9633.h>
+#include <Wire.h> // OPTIONAL see below under setup()
 
 // create instance
 PCA9633 rgbw; 
 
 void setup() {
+	Wire.begin(SDA,SCL); // OPTIONAL not needed if you use the 3rd begin below and are using default i2c pins for your board
+	
 	// initilize library with device i2c address.
 	// consult datasheet for available addresses and use an i2c scan routine to verify
 	rgbw.begin(0x60);
 
 	// rgbw.begin(0x60, 50); // optionally set fade delay if using library to transistion between PWM values
+	
+	// rgbw.begin(0x60, 50, true); // set fade delay and also init the i2c bus using Arduino defaults for your board
 }
 
 void loop() {
