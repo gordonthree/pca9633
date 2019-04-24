@@ -79,7 +79,7 @@ class PCA9633 {
     PCA9633();
     void begin(uint8_t devAddr); // set i2c address
     void begin(uint8_t devAddr, uint8_t fade_delay); // set i2c address and fade delay
-    void begin(uint8_t devAddr, uint8_t i2c_init); // set i2c address, fade delay and start i2c bus
+    void begin(uint8_t devAddr, uint8_t fade_delay, uint8_t i2c_init); // set i2c address, fade delay and start i2c bus
     void setrgbw(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3); // set all four pwm reg at once
     void setpwm(uint8_t pwmaddr, uint8_t pwmval); // set a single PWM register
     void setgrouppwm(uint8_t pwm); // group dimming
