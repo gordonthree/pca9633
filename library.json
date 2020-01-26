@@ -14,6 +14,7 @@
     "atmelavr",
     "atmelmegaavr",
     "ststm32",
-    "espressif8266"
+    "espressif8266",
+    "espressif32"
   ]
 }
