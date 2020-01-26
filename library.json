@@ -1,0 +1,19 @@
+{
+  "name": "pca9633",
+  "version": "1.0.0",
+  "keywords": "i2c, LED, pca9633, RGB, RGBA, RGTW, PWM",
+  "description": "Control NXP PCA9633 (and 9632) four channel PWM led driver chips.",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/gordonthree/pca9633.git"
+  },
+  "frameworks": "arduino",
+  "platforms":
+  [
+    "atmelavr",
+    "atmelmegaavr",
+    "ststm32",
+    "espressif8266"
+  ]
+}
