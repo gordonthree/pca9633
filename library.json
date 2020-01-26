@@ -9,6 +9,13 @@
     "url": "https://github.com/gordonthree/pca9633.git"
   },
   "frameworks": "arduino",
+  "authors":
+    {
+        "name": "Gordon McLellan",
+        "email": "gordonthree@gmail.com",
+        "url": "https://github.com/gordonthree",
+        "maintainer": true
+    },
   "platforms":
   [
     "atmelavr",
