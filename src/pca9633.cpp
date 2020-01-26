@@ -93,7 +93,7 @@ void PCA9633::begin(uint8_t devAddr, uint8_t fade_delay) { // set device address
 }
 
 void PCA9633::begin(uint8_t devAddr, uint8_t fade_delay, uint8_t i2c_init) { // set device address, fade delay and init i2c using defaults
-  pcaAddr = devAddr;
+  _pcaAddr = devAddr;
   chipinit(); // setup chip
   setFade(fade_delay);
   if (i2c_init) { // start i2c bus
